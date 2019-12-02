@@ -11,6 +11,8 @@ import java.util.Date;
 @Data
 public class CategoryEntity {
 	private Integer id;
+//	主键
+
 	private Integer parentId;
 	private String name;
 	private Integer status;
