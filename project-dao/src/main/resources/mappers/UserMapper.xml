@@ -13,4 +13,19 @@
         from small_user
         order by id
     </select>
+    <!--    登陆查询-->
+    <select id="getByName" resultMap="userResultMap">
+        select id, username,pwd,email,phone,question,answer,role,create_time,update_time
+        from small_user where username = #{username}
+    </select>
+    <insert id="userInsert">
+        INSERT INTO small_user(username,pwd,email,phone,question,answer,role,create_time,update_time)
+        VALUES (#{username},#{pwd},#{email},#{phone}, #{question}, #{answer}, #{role},#{createTime}, #{updateTime});
+    </insert>
+    <delete id="userDelete">
+        delete from small_user where id = #{id}
+    </delete>
+    <update id="userUpdate">
+
+    </update>
 </mapper>

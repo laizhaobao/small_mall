@@ -20,4 +20,24 @@ public class UserServiceImpl implements UserService {
 	public List<UserEntity> getPageHelper(int pageNum, int pageSize) {
 		return userDao.getPageHelper(pageNum,pageSize);
 	}
+
+	@Override
+	public UserEntity getByName(UserEntity userEntity) {
+		return userDao.getByName(userEntity);
+	}
+
+	@Override
+	public boolean userInsert(UserEntity userEntity) {
+		return userDao.userInsert(userEntity);
+	}
+
+	@Override
+	public boolean userDelete(Integer id) {
+		return userDao.userDelete(id);
+	}
+
+	@Override
+	public boolean userUpdate(UserEntity userEntity) {
+		return userDao.userUpdate(userEntity);
+	}
 }

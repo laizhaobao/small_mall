@@ -10,4 +10,8 @@ import java.util.List;
  */
 public interface UserService {
 	List<UserEntity> getPageHelper(int pageNum,int pageSize);
+	UserEntity getByName(UserEntity userEntity);
+	boolean userInsert(UserEntity userEntity);
+	boolean userDelete(Integer id);
+	boolean userUpdate(UserEntity userEntity);
 }
