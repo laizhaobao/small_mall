@@ -17,6 +17,8 @@ public class CategoryEntity {
 //	父类id
 
 	private String name;
+//	类型名称
+
 	private Integer status;
 	private Date createTime;
 	private Date updateTime;
