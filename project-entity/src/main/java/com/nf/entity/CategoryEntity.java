@@ -14,6 +14,8 @@ public class CategoryEntity {
 //	主键
 
 	private Integer parentId;
+//	父类id
+
 	private String name;
 	private Integer status;
 	private Date createTime;
