@@ -3,7 +3,7 @@ package com.nf.config;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInterceptor;
-import com.nf.interceptory.FirstInterceptor;
+import com.nf.interceptory.LoginInterceptor;
 import org.apache.ibatis.logging.stdout.StdOutImpl;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -27,6 +27,7 @@ import org.springframework.web.servlet.config.annotation.*;
 
 import javax.sql.DataSource;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -127,8 +128,12 @@ public class AppConfig implements WebMvcConfigurer {
 	//配置拦截器
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		InterceptorRegistration registration = new InterceptorRegistration(new FirstInterceptor());
+		InterceptorRegistration registration = registry.addInterceptor(new LoginInterceptor());
 		registration.addPathPatterns("/**");
+		List<String> excludeUrl=new ArrayList<>();
+		excludeUrl.add("/fe/loginView");
+		excludeUrl.add("/fe/login");
+		registration.excludePathPatterns(excludeUrl);
 	}
 
 	//配置静态资源解析器

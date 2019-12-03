@@ -74,7 +74,7 @@
             }
         },
         mounted: function () {//初始化数据 第一次会执行的方法
-            $.post('/list', {pageNum: 1}, function (data) {
+            $.post('/fe/list', {pageNum: 1}, function (data) {
                 alert(data.message);
                 if(data.code == "200"){
                     vue.pageInfo = data.data;
@@ -85,7 +85,7 @@
         },
         watch: {//监听属性 当属性发生改变执行
             page: function () {
-                $.post('/list', {pageNum: vue.page}, function (data) {
+                $.post('/fe/list', {pageNum: vue.page}, function (data) {
                     vue.pageInfo = data;
                 }, "json");
             }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author lzb
  * 当控制器中出现运行异常这里会被处理
  */
-@ControllerAdvice
+//@ControllerAdvice
 public class SystemExceptionHandler {
 	@ExceptionHandler(RuntimeException.class)
 	@ResponseBody

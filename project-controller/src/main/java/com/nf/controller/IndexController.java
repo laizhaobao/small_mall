@@ -10,18 +10,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 
 /**
  * @author lzb
  */
 @Controller
+@RequestMapping("/fe")
 public class IndexController {
 	@Autowired
 	private UserService userService;
+/*主界面*/
 
 	@RequestMapping("/index")
 	public String index() {
-		return "index";
+		return "fe/index";
 	}
 
 	@RequestMapping("/list")
@@ -33,4 +39,23 @@ public class IndexController {
 		ResponseVO vo = ResponseVO.newBuilder().code("200").data(pageInfo).message("ok").build();
 		return vo;
 	}
+
+
+/*	登陆*/
+
+	@RequestMapping("/loginView")
+	public String login(){
+		return "fe/loginView";
+	}
+	@RequestMapping("/login")
+	public String login(String username, String pwd, HttpServletRequest request){
+		if("admin".equalsIgnoreCase(username)&&"123456".equalsIgnoreCase(pwd)){
+			HttpSession session = request.getSession();
+			session.setAttribute("username",username);
+			System.out.println("登陆成功...");
+		}
+		return "redirect:index";
+	}
+
+
 }
