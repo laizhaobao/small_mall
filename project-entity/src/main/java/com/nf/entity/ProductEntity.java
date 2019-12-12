@@ -12,25 +12,25 @@ import java.util.Date;
 @Data
 public class ProductEntity {
 	private Integer id;
-	private Integer category_id;
+	private Integer categoryId;
 	//'分类id,对应small_category表的主键',
 
-	private String productname;
+	private String productName;
 	// '商品名称',
 
 	private String subtitle;
 	//'商品副标题',
 
-	private String main_image;
+	private String mainImage;
 	// '产品主图,url相对地址',
 
-	private String sub_images;
+	private String subImages;
 	//'图片地址,json格式,扩展用',
 
 	private String detail;
 	//'商品详情',
 
-	private Integer p_type;
+	private Integer ptype;
 	//'商品类型.1-普通商品2-二手商品',
 
 	private BigDecimal price;

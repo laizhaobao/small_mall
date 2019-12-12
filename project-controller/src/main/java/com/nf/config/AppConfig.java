@@ -1,9 +1,8 @@
 package com.nf.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInterceptor;
-import com.nf.interceptory.LoginInterceptor;
+
 import org.apache.ibatis.logging.stdout.StdOutImpl;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -13,22 +12,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.format.FormatterRegistry;
-import org.springframework.format.datetime.DateFormatter;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.*;
-
-
 import javax.sql.DataSource;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -45,8 +38,9 @@ import java.util.Properties;
 @MapperScan("com.nf.dao")
 @PropertySource("classpath:db.properties")
 @EnableTransactionManagement
+@MvcConfigAnnotation
 @EnableWebMvc
-public class AppConfig implements WebMvcConfigurer {
+public class AppConfig {
 	@Value("${jdbc.url}")
 	private String URL;
 	@Value("${jdbc.username}")
@@ -103,45 +97,20 @@ public class AppConfig implements WebMvcConfigurer {
 		return transactionManager;
 	}
 
-	//	配置视图资源解析器
-	@Override
-	public void configureViewResolvers(ViewResolverRegistry registry) {
-		registry.jsp("/WEB-INF/views/", ".jsp");
+	/**
+	 * 文件上传支持
+	 * id必须为multipartResolver，否则无法解析form-data类型的数据
+	 */
+	@Bean("multipartResolver")
+	public CommonsMultipartResolver commonsMultipartResolver() throws IOException {
+		CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
+		commonsMultipartResolver.setDefaultEncoding("utf-8");
+		commonsMultipartResolver.setMaxUploadSize(5242880);
+		commonsMultipartResolver.setMaxInMemorySize(51200);
+		commonsMultipartResolver.setUploadTempDir(new FileSystemResource("/uploadTempDir"));
+		commonsMultipartResolver.setResolveLazily(true);
+		return commonsMultipartResolver;
 	}
 
-	//	配置时间格式转换器 这个是在数据绑定的时候将字符串转换为日期格式
-	@Override
-	public void addFormatters(FormatterRegistry registry) {
-		registry.addFormatter(new DateFormatter("yyyy-MM-dd"));
-	}
 
-	//配置信息转换器,这个是在响应回去的时候进行转换,重写这个方法会覆盖默认的
-	@Override
-	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.setDateFormat(sdf);
-		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter(objectMapper);
-		converters.add(converter);
-	}
-
-	//配置拦截器
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		InterceptorRegistration registration = registry.addInterceptor(new LoginInterceptor());
-		registration.addPathPatterns("/**");
-		List<String> excludeUrl=new ArrayList<>();
-		excludeUrl.add("/fe/loginView");
-		excludeUrl.add("/fe/login");
-		registration.excludePathPatterns(excludeUrl);
-	}
-
-	//配置静态资源解析器
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//		相当于xml中配置mapping
-		ResourceHandlerRegistration registration = registry.addResourceHandler("/static/**");
-//      相当于xml中配置location
-		registration.addResourceLocations("classpath:/static/");
-	}
 }

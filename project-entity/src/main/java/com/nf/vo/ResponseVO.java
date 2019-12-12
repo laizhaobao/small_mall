@@ -1,7 +1,5 @@
 package com.nf.vo;
 
-
-import lombok.Builder;
 import lombok.Data;
 
 /**

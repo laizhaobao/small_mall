@@ -14,4 +14,5 @@ public interface UserDao {
 	boolean userInsert(UserEntity userEntity);
 	boolean userDelete(Integer id);
 	boolean userUpdate(UserEntity userEntity);
+	List<UserEntity> searchName(@Param("pageNum") int pageNum, @Param("pageSize") int pageSize,@Param("name") String name);
 }

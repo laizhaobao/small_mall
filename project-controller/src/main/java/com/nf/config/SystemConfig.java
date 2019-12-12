@@ -2,7 +2,11 @@ package com.nf.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletRegistration;
+
 public class SystemConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
+
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
 		//		容器启动(配置父容器的地方)

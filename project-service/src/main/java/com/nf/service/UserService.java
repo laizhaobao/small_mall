@@ -14,4 +14,5 @@ public interface UserService {
 	boolean userInsert(UserEntity userEntity);
 	boolean userDelete(Integer id);
 	boolean userUpdate(UserEntity userEntity);
+	List<UserEntity> searchName(int pageNum,int pageSize,String name);
 }

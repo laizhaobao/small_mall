@@ -6,9 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="project-controller" />
-        <module name="project-entity" />
         <module name="project-service" />
+        <module name="project-entity" />
+        <module name="project-controller" />
         <module name="project-dao" />
       </profile>
     </annotationProcessing>

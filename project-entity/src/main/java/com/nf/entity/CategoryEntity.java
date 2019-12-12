@@ -13,9 +13,6 @@ public class CategoryEntity {
 	private Integer id;
 //	主键
 
-	private Integer parentId;
-//	父类id
-
 	private String name;
 //	类型名称
 

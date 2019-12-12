@@ -37,7 +37,7 @@
                 <div class="col-lg-6 bg-white">
                     <div class="form d-flex align-items-center">
                         <div class="content">
-                            <form method="post" action="/fe/login" class="form-validate" id="loginFrom">
+                            <form method="post" action="/be/login" class="form-validate" id="loginFrom">
                                 <div class="form-group">
                                     <input id="login-username" type="text" name="username" required data-msg="请输入用户名" placeholder="用户名" value="admin" class="input-material">
                                 </div>
@@ -58,10 +58,8 @@
     </div>
 </div>
 <!-- JavaScript files-->
-<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="/static/zui-ui/lib/jquery/jquery.js"></script>
 <script src="https://www.jq22.com/jquery/bootstrap-3.3.4.js"></script>
 <script src="/static/vendor/jquery-validation/jquery.validate.min.js"></script><!--表单验证-->
-<!-- Main File-->
-<script src="/static/js/front.js"></script>
 </body>
 </html>

@@ -1,16 +1,10 @@
 package com.nf.controller;
 
 
-import com.github.pagehelper.PageInfo;
-import com.nf.vo.ResponseVO;
-import com.nf.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServlet;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -19,33 +13,20 @@ import javax.servlet.http.HttpSession;
  * @author lzb
  */
 @Controller
-@RequestMapping("/fe")
+@RequestMapping("/be")
 public class IndexController {
-	@Autowired
-	private UserService userService;
-/*主界面*/
 
+/*主界面*/
 	@RequestMapping("/index")
 	public String index() {
-		return "fe/index";
+		return "/be/index";
 	}
-
-	@RequestMapping("/list")
-	@ResponseBody
-	public ResponseVO list(
-			@RequestParam(value = "pageNum", defaultValue = "1", required = false) int pageNum) {
-		PageInfo pageInfo = new PageInfo(userService.getPageHelper(pageNum, 3),5);
-		System.out.println(userService.getPageHelper(pageNum, 3).get(0).getCreateTime());
-		ResponseVO vo = ResponseVO.newBuilder().code("200").data(pageInfo).message("ok").build();
-		return vo;
-	}
-
 
 /*	登陆*/
 
 	@RequestMapping("/loginView")
 	public String login(){
-		return "fe/loginView";
+		return "/be/loginView";
 	}
 	@RequestMapping("/login")
 	public String login(String username, String pwd, HttpServletRequest request){
@@ -54,8 +35,22 @@ public class IndexController {
 			session.setAttribute("username",username);
 			System.out.println("登陆成功...");
 		}
-		return "redirect:index";
+		return "/be/index";
+	}
+/*退出登录*/
+
+	@RequestMapping("/exit")
+	public void exitLogin(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		System.out.println("退出登录...");
+//		强制会话销毁
+		session.invalidate();
 	}
 
+//错误页面404地址
 
+	@RequestMapping("/error")
+	public String error(){
+		return "error";
+	}
 }

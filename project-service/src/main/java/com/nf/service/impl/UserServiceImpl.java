@@ -40,4 +40,9 @@ public class UserServiceImpl implements UserService {
 	public boolean userUpdate(UserEntity userEntity) {
 		return userDao.userUpdate(userEntity);
 	}
+
+	@Override
+	public List<UserEntity> searchName(int pageNum, int pageSize,String name) {
+		return userDao.searchName(pageNum,pageSize,name);
+	}
 }

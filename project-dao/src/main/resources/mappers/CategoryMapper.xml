@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nf.dao.CategoryDao">
+    <resultMap id="cateResultMap" type="com.nf.entity.CategoryEntity">
+            <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <result property="createTime" column="create_time"></result>
+        <result property="updateTime" column="update_time"></result>
+    </resultMap>
+    <select id="getAll" resultMap="cateResultMap" >
+      select id, name, create_time, update_time from small_category order by id
+    </select>
+    <select id="getPageHelper" resultMap="cateResultMap" >
+      select id, name, create_time, update_time from small_category order by id
+    </select>
+
+
+    <select id="searchName" resultMap="cateResultMap">
+        select id,name, create_time, update_time
+        from small_category
+        <if test="name != null">
+            where name like '%' #{name} '%'
+        </if>
+        order by id
+    </select>
+
+    <insert id="cateInsert">
+        insert into small_category(name, create_time, update_time) values (#{name},now(),now())
+    </insert>
+    <delete id="cateDelete">
+        delete from small_category where id = #{id}
+    </delete>
+    <update id="cateUpdate">
+        update small_category set name=#{name},update_time=now() where id = #{id}
+    </update>
+</mapper>
