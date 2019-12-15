@@ -1,6 +1,5 @@
 package com.nf.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -10,7 +9,7 @@ import java.util.Date;
  */
 @Data
 public class UserEntity {
-	private Integer id;
+	private Integer uid;
 	//主键
 
 	private String username;

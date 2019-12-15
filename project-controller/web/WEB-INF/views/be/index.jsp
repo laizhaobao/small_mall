@@ -62,7 +62,7 @@
                             <a href="#"><i class="icon icon-envelope-alt"></i>留言</a>
                             <ul>
                                 <li>
-                                    <a href="#">留言管理</a>
+                                    <a href="/message/index">留言管理</a>
                                 </li>
 
                             </ul>

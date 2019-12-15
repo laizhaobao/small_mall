@@ -10,8 +10,23 @@
         <result property="createTime" column="create_time"></result>
         <result property="updateTime" column="update_time"></result>
     </resultMap>
-    <select id="getPageHelper">
-       select u.username,m.content,m.create_time from
-        small_user u JOIN small_message m ON u.id = m.user_id order m.id
+    <select id="getPageHelper" resultMap="messageResultMap">
+      select m.id,u.uid,u.username,m.content,m.create_time from small_user u JOIN
+       small_message m ON u.uid = m.user_id
     </select>
+    <select id="searchName" resultMap="messageResultMap">
+        select m.id,u.uid,u.username,m.content,m.create_time from small_user u JOIN
+        small_message m ON u.uid = m.user_id
+        <if test="name != null">
+            where u.username like '%' #{name} '%'
+        </if>
+        order by id
+    </select>
+    <insert id="mesInsert">
+        insert into small_message(user_id, content, create_time, update_time)
+         values (#{userId},#{content},now(),now())
+    </insert>
+    <delete id="mesDelete">
+        delete from small_message where id = #{id}
+    </delete>
 </mapper>

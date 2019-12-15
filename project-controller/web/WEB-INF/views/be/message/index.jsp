@@ -54,7 +54,7 @@
                                     <a href="/product/index">商品管理</a>
                                 </li>
                                 <li>
-                                    <a href="#">品类管理</a>
+                                    <a href="/category/index">品类管理</a>
                                 </li>
                             </ul>
                         </li>
@@ -92,11 +92,8 @@
                 <div class="col-md-12 column">
                     <div class="col-md-4 column">
                         <h1>
-                            用户管理
+                            留言管理
                         </h1>
-                    </div>
-                    <div class="col-md-8 column" style="text-align: right;top:18px">
-                        <a class="btn btn-primary" href="#" @click="addModal()">添加用户</a>
                     </div>
                     <hr/>
                 </div>
@@ -108,7 +105,7 @@
                     <div class="input-control search-box search-box-circle has-icon-left has-icon-right search-example"
                          id="searchboxExample">
                         <input id="inputSearchExample3" type="search" style="width: 200px;"
-                               class="form-control search-input" placeholder="按账号搜索">
+                               class="form-control search-input" placeholder="按用户名称搜索">
                         <label for="inputSearchExample3" class="input-control-icon-left search-icon"
                                style="top: 8px;"><i class="icon icon-search"></i></label>
                         <span class="input-group-btn">
@@ -121,29 +118,19 @@
                         <thead>
                         <tr>
                             <th>编号</th>
-                            <th>账号</th>
-                            <th>密码</th>
-                            <th>邮箱</th>
-                            <th>手机号码</th>
-                            <th>密保问题</th>
-                            <th>密保答案</th>
-                            <th>用户权限</th>
+                            <th>用户名</th>
+                            <th>留言内容</th>
                             <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="(user,index) in pageInfo.list">
+                        <tr v-for="(mes,index) in pageInfo.list">
                             <td>{{index+1}}</td>
-                            <td>{{user.username}}</td>
-                            <td>{{user.pwd}}</td>
-                            <td>{{user.email}}</td>
-                            <td>{{user.phone}}</td>
-                            <td>{{user.question}}</td>
-                            <td>{{user.answer}}</td>
-                            <td>{{user.role}}</td>
+                            <td>{{mes.username}}</td>
+                            <td>{{mes.content}}</td>
                             <td>
-                                <input type="button" class="btn btn-danger" @click="del(user.uid)" value="删除">
-                                <input type="button" class="btn btn-primary" @click="updateModal(user)" value="编辑">
+                                <input type="button" class="btn btn-primary" @click="showModal(mes)" value="查看">
+                                <input type="button" class="btn btn-danger" @click="del(mes.id)" value="删除">
                             </td>
                         </tr>
                         </tbody>
@@ -168,56 +155,32 @@
                     </h4>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal" role="form">
-                        <div class="form-group" hidden>
-                            <label for="userid" class="col-sm-2 control-label">用户ID</label>
+                    <form class="form-horizontal" role="form" id="myform">
+                        <div class="form-group">
+                            <label for="userId" class="col-sm-2 control-label">用户ID</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="userid" name="id" v-model="id"/>
+                                <input type="text" disabled class="form-control" id="userId" name="id" v-model="id"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label">账号</label>
+                            <label for="username" class="col-sm-2 control-label">用户名称</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="username" name="username"
+                                <input type="text" disabled class="form-control" id="username" name="username"
                                        v-model="username"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="pwd" class="col-sm-2 control-label">密码</label>
+                            <label for="content" class="col-sm-2 control-label">留言内容</label>
                             <div class="col-sm-10">
-                                <input type="password" class="form-control" id="pwd" name="pwd" v-model="pwd"/>
+                                <input type="text" disabled class="form-control" id="content" name="content"
+                                       v-model="content"/>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="email" class="col-sm-2 control-label">邮箱</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="email" name="email" v-model="email"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone" class="col-sm-2 control-label">手机号码</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="phone" name="phone" v-model="phone"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="question" class="col-sm-2 control-label">密保问题</label>
-                            <div class="col-sm-10">
-                                <input type="tel" class="form-control" id="question" name="question"
-                                       v-model="question"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="answer" class="col-sm-2 control-label">密保答案</label>
-                            <div class="col-sm-10">
-                                <input type="tel" class="form-control" id="answer" name="answer" v-model="answer"/>
-                            </div>
-                        </div>
+
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                                 </button>
-                                <a class="btn btn-primary" href="#" @click="save()">保存</a>
                             </div>
                         </div>
                     </form>
@@ -244,27 +207,32 @@
             page: 1,
             id: null,
             username: null,
-            pwd: null,
-            email: null,
-            phone: null,
-            question: null,
-            answer: null
+            content:null
         }, methods: {
             /*
         * 这里是写方法的地方
         * 方法名字:function(){
         * 
         * }
-        * */
+        * */ showModal: function (data) {
+                $("#myModal").data("op", "update");
+                vm.id = data.id;
+                vm.username = data.username;
+                vm.content = data.content;
+                $("#myModalLabel").text("留言管理");
+
+                $("#myModal").modal('show');
+            }
+            ,
             searchName:function(){
                const name = $("#inputSearchExample3").val();
-                $.post('/user/search', {pageNum: vm.page,username: name}, function (data) {
+                $.post('/message/search', {pageNum: vm.page,name: name}, function (data) {
                     vm.pageInfo = data.data;
                 }, "json");
             },
             del: function (id) {
                 if (confirm("是否删除?")) {
-                    $.post('/user/delete', {id:id}, function (data) {
+                    $.post('/message/delete', {id:id}, function (data) {
                        if(data.code == "200"){
                            alert(data.message);
                            window.location.reload();
@@ -272,91 +240,18 @@
                     }, "json");
                 }
             },
-            addModal: function () {
-                $("#myModal").data("op", "insert");
-                $("#myModalLabel").text("用户管理---添加用户");
-                vm.username = null;
-                vm.pwd = null;
-                vm.email = null;
-                vm.phone = null;
-                vm.question = null;
-                vm.answer = null;
-                $("#myModal").modal('show');
-            },
-            updateModal: function (data) {
-                $("#myModal").data("op", "update");
-                vm.id = data.id;
-                vm.username = data.username;
-                vm.pwd = data.pwd;
-                vm.email = data.email;
-                vm.phone = data.phone;
-                vm.question = data.question;
-                vm.answer = data.answer;
-                $("#myModalLabel").text("用户管理---修改用户");
-                $("#myModal").modal('show');
-            }
-            ,
-            save: function () {
-                const op = $("#myModal").data("op");
-                if (op != "update") {
-                    const obj = {
-                        username: vm.username,
-                        pwd: vm.pwd,
-                        email: vm.email,
-                        phone: vm.phone,
-                        question: vm.question,
-                        answer: vm.answer,
-                    }
-                    $.ajax({
-                        url: "/user/insert",
-                        dataType: "json",
-                        type: "post",
-                        data: obj,
-                        success: function (data) {
-                            if (data.code = "200") {
-                                alert(data.message)
-                                $("#myModal").modal('hide');
-                            } else {
-                                alert(data.message)
-                            }
-                        }
-                    })
-                } else {
-                    const obj = {
-                        id: vm.id,
-                        username: vm.username,
-                        pwd: vm.pwd,
-                        email: vm.email,
-                        phone: vm.phone,
-                        question: vm.question,
-                        answer: vm.answer,
-                    }
-                    $.ajax({
-                        url: "/user/update",
-                        dataType: "json",
-                        type: "post",
-                        data: obj,
-                        success: function (data) {
-                            if (data.code = "200") {
-                                alert(data.message)
-                                $("#myModal").modal('hide');
-                            } else {
-                                alert(data.message)
-                            }
-                        }
-                    })
-                }
+            save: function (){
 
             }
         },
         mounted: function () {//初始化数据 第一次会执行的方法
-            $.post('/user/list', {pageNum: 1}, function (data) {
+            $.post('/message/list', {pageNum: 1}, function (data) {
                 vm.pageInfo = data.data;
             }, "json");
         },
         watch: {//监听属性 当属性发生改变执行
             page: function () {
-                $.get('/user/list', {pageNum: vm.page}, function (data) {
+                $.get('/message/list', {pageNum: vm.page}, function (data) {
                     vm.pageInfo = data.data;
                 }, "json");
             }

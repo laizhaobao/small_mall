@@ -12,6 +12,7 @@ import java.util.Date;
 public class MessageEntity {
 	private Integer id;
 	private Integer userId;
+	private String username;
 	private String content;
 	private Date createTime;
 	private Date updateTime;
