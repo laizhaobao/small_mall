@@ -14,7 +14,7 @@
     <script type="text/javascript" src="/static/zui-ui/lib/jquery/jquery.js"></script>
     <link rel="stylesheet" href="/static/zui-ui/css/zui.min.css"/>
     <script type="text/javascript" src="/static/zui-ui/js/zui.min.js"></script>
-    <script type="text/javascript" src="/static/js/vue.js"></script>
+    <script type="text/javascript" src="/static/js/vue.min.js"></script>
 </head>
 <body>
 <div class="container" id="app">
@@ -54,7 +54,7 @@
                                     <a href="/product/index">商品管理</a>
                                 </li>
                                 <li>
-                                    <a href="#">品类管理</a>
+                                    <a href="/category/index">品类管理</a>
                                 </li>
                             </ul>
                         </li>
@@ -71,7 +71,7 @@
                             <a href="#"><i class="icon icon-shopping-cart"></i>订单</a>
                             <ul>
                                 <li>
-                                    <a href="#">订单管理</a>
+                                    <a href="/order/index">订单管理</a>
                                 </li>
 
                             </ul>
@@ -170,9 +170,9 @@
                 <div class="modal-body">
                     <form class="form-horizontal" role="form">
                         <div class="form-group" hidden>
-                            <label for="userid" class="col-sm-2 control-label">用户ID</label>
+                            <label for="uid" class="col-sm-2 control-label">用户ID</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="userid" name="id" v-model="id"/>
+                                <input type="text" class="form-control" id="uid" name="uid" v-model="uid"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -242,7 +242,7 @@
             //定义变量接收数据
             pageInfo: [],
             page: 1,
-            id: null,
+            uid: null,
             username: null,
             pwd: null,
             email: null,
@@ -262,11 +262,15 @@
                     vm.pageInfo = data.data;
                 }, "json");
             },
-            del: function (id) {
+            del: function (data) {
+                alert(data);
                 if (confirm("是否删除?")) {
-                    $.post('/user/delete', {id:id}, function (data) {
+                    $.post('/user/delete', {id:data}, function (data) {
                        if(data.code == "200"){
-                           alert(data.message);
+                           // 创建 Messager 实例
+                           const message = new $.zui.Messager(data.message, {
+                               type: 'danger'// 定义颜色主题
+                           }).show();
                            window.location.reload();
                        }
                     }, "json");
@@ -285,7 +289,7 @@
             },
             updateModal: function (data) {
                 $("#myModal").data("op", "update");
-                vm.id = data.id;
+                vm.uid = data.uid;
                 vm.username = data.username;
                 vm.pwd = data.pwd;
                 vm.email = data.email;
@@ -314,16 +318,23 @@
                         data: obj,
                         success: function (data) {
                             if (data.code = "200") {
-                                alert(data.message)
+                                // 创建 Messager 实例
+                                const message = new $.zui.Messager(data.message, {
+                                    type: 'success'// 定义颜色主题
+
+                                }).show();
                                 $("#myModal").modal('hide');
                             } else {
-                                alert(data.message)
+                                // 创建 Messager 实例
+                                const message = new $.zui.Messager(data.message, {
+                                    type: 'danger'// 定义颜色主题
+                                }).show();
                             }
                         }
                     })
                 } else {
                     const obj = {
-                        id: vm.id,
+                        uid: vm.uid,
                         username: vm.username,
                         pwd: vm.pwd,
                         email: vm.email,
@@ -338,10 +349,19 @@
                         data: obj,
                         success: function (data) {
                             if (data.code = "200") {
-                                alert(data.message)
+                                // 创建 Messager 实例
+                                const message = new $.zui.Messager(data.message, {
+                                    type: 'success',// 定义颜色主题
+                                    time:0
+                                }).show();
                                 $("#myModal").modal('hide');
+                                window.location.reload();
                             } else {
-                                alert(data.message)
+                                // 创建 Messager 实例
+                                const message = new $.zui.Messager(data.message, {
+                                    type: 'danger',// 定义颜色主题
+                                    time:0
+                                }).show();
                             }
                         }
                     })

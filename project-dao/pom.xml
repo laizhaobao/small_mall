@@ -11,57 +11,57 @@
 
     <artifactId>project-dao</artifactId>
 
-<dependencies>
-<!--    实体模块依赖-->
-    <dependency>
-        <groupId>com.nf</groupId>
-        <artifactId>project-entity</artifactId>
-        <version>${project.version}</version>
-    </dependency>
-<!--    spring容器-->
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-context</artifactId>
-    </dependency>
-<!--    事务依赖，jdbc里面自带事务jar,所以我们只需要依赖jdbc即可-->
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-jdbc</artifactId>
-    </dependency>
-<!--mysql驱动-->
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-    </dependency>
-<!--    连接池-->
-    <dependency>
-        <groupId>com.alibaba</groupId>
-        <artifactId>druid</artifactId>
-    </dependency>
-<!--mybatis依赖 持久层框架,用于管理sql语句-->
-    <dependency>
-        <groupId>org.mybatis</groupId>
-        <artifactId>mybatis</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.mybatis</groupId>
-        <artifactId>mybatis-spring</artifactId>
-    </dependency>
-<!--    分页依赖-->
-    <dependency>
-        <groupId>com.github.pagehelper</groupId>
-        <artifactId>pagehelper</artifactId>
-    </dependency>
-<!-- 测试依赖-->
-    <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-    </dependency>
-<!--    spring 测试依赖-->
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-test</artifactId>
-    </dependency>
+    <dependencies>
+        <!--    实体模块依赖-->
+        <dependency>
+            <groupId>com.nf</groupId>
+            <artifactId>project-entity</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!--    spring容器-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <!--    事务依赖，jdbc里面自带事务jar,所以我们只需要依赖jdbc即可-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
+        <!--mysql驱动-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <!--    连接池-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+        </dependency>
+        <!--mybatis依赖 持久层框架,用于管理sql语句-->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+        </dependency>
+        <!--    分页依赖-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+        </dependency>
+        <!-- 测试依赖-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <!--    spring 测试依赖-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
 
-</dependencies>
+    </dependencies>
 </project>

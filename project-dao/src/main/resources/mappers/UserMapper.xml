@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nf.dao.UserDao">
     <resultMap id="userResultMap" type="com.nf.entity.UserEntity">
-        <id property="uid" column="id"></id>
+        <id property="uid" column="uid"></id>
         <result property="username" column="username"></result>
         <result property="createTime" column="create_time"></result>
         <result property="updateTime" column="update_time"></result>
@@ -40,6 +40,6 @@
     </delete>
     <update id="userUpdate">
         update small_user set username=#{username},pwd=#{pwd},email=#{email},phone=#{phone},question=#{question},
-        answer=#{answer},update_time=now() where uid = #{id}
+        answer=#{answer},update_time=now() where uid = #{uid}
     </update>
 </mapper>

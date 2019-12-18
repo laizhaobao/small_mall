@@ -71,7 +71,7 @@ public class AppConfig {
 		return sessionFactoryBean.getObject();
 	}
 
-	// 配置日志
+//	// 配置日志
 	private org.apache.ibatis.session.Configuration getConfiguration() {
 		org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
 		configuration.setLogImpl(StdOutImpl.class);

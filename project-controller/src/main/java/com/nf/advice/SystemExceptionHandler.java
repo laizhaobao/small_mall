@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class SystemExceptionHandler {
 	@ExceptionHandler(RuntimeException.class)
 	@ResponseBody
-	public ResponseVO handlerRuntimeException(){
+	public ResponseVO handlerRuntimeException(RuntimeException re){
+
+		re.printStackTrace();
 		ResponseVO vo = ResponseVO.newBuilder().code("500").message("failed-----").build();
 		return vo;
 	}

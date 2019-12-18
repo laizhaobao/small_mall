@@ -16,7 +16,6 @@
             <param-value>UTF-8</param-value>
         </init-param>
     </filter>
-
     <filter-mapping>
         <filter-name>encoding</filter-name>
         <url-pattern>/*</url-pattern>
@@ -26,4 +25,5 @@
         <error-code>404</error-code>
         <location>/be/error</location>
     </error-page>
+
 </web-app>

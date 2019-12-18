@@ -92,13 +92,9 @@
                 <div class="col-md-12 column">
                     <div class="col-md-4 column">
                         <h1>
-                            类型管理
+                            订单管理
                         </h1>
                     </div>
-                    <div class="col-md-8 column" style="text-align: right;top:18px">
-                        <a class="btn btn-primary" href="#" @click="addModal()">添加类型</a>
-                    </div>
-                    <hr/>
                 </div>
                 <div class="col-md-12 column">
                     <hr/>
@@ -108,7 +104,7 @@
                     <div class="input-control search-box search-box-circle has-icon-left has-icon-right search-example"
                          id="searchboxExample">
                         <input id="inputSearchExample3" type="search" style="width: 200px;"
-                               class="form-control search-input" placeholder="按名称搜索">
+                               class="form-control search-input" placeholder="按订单号搜索">
                         <label for="inputSearchExample3" class="input-control-icon-left search-icon"
                                style="top: 8px;"><i class="icon icon-search"></i></label>
                         <span class="input-group-btn">
@@ -120,18 +116,31 @@
                     <table class="table table-bordered">
                         <thead>
                         <tr>
-                            <th>编号</th>
-                            <th>类型名称</th>
+                            <th>订单号</th>
+                            <th>收件人</th>
+                            <th>订单状态</th>
+                            <th>订单总价</th>
+                            <th>创建时间</th>
                             <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="(cate,index) in pageInfo.list">
-                            <td>{{cate.id}}</td>
-                            <td>{{cate.name}}</td>
+                        <tr v-for="(order,index) in pageInfo.list">
+                            <td><a href="#" @click="details(order.orderNo)">{{order.orderNo}}</a></td>
+                            <td>{{order.receiverName}}</td>
+                            <td v-if="order.orderStatus==10">
+                                未支付
+                            </td>
+                            <td v-else-if="order.orderStatus==20">
+                                已支付
+                            </td>
+                            <td v-else-if="order.orderStatus==40">
+                                已发货
+                            </td>
+                            <td>￥{{order.payment}}</td>
+                            <td>{{order.createTime}}</td>
                             <td>
-                                <input type="button" class="btn btn-danger" @click="del(cate.id)" value="删除">
-                                <input type="button" class="btn btn-primary" @click="updateModal(cate)" value="编辑">
+                                <input type="button" class="btn btn-primary" @click="details(order.orderNo)" value="查看">
                             </td>
                         </tr>
                         </tbody>
@@ -139,46 +148,6 @@
                     <ul class="pager" v-for="(nums,index) in pageInfo.navigatepageNums">
                         <li @click="page=nums"><a href="#">{{nums}}</a></li>
                     </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- 模态框（Modal）-->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">
-
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal" role="form" id="myform">
-                        <div class="form-group" hidden>
-                            <label for="categoryId" class="col-sm-2 control-label">用户ID</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="categoryId" name="id" v-model="id"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="name" class="col-sm-2 control-label">名称</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="name" name="name"
-                                       v-model="name"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-                                </button>
-                                <a class="btn btn-primary" href="#" @click="save()">保存</a>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -199,112 +168,32 @@
         data: {
             //定义变量接收数据
             pageInfo: [],
-            page: 1,
-            id: null,
-            name: null
+            page: 1
         }, methods: {
             /*
         * 这里是写方法的地方
         * 方法名字:function(){
         * 
         * }
-        * */
-            searchName:function(){
-               const name = $("#inputSearchExample3").val();
-                $.post('/category/search', {pageNum: vm.page,name: name}, function (data) {
+        * */details:function(data){
+                location.href="/order/details?details="+data;
+            },
+            searchName: function () {
+                const orderNo = $("#inputSearchExample3").val();
+                $.post('/order/search', {pageNum: vm.page, orderNo: orderNo}, function (data) {
                     vm.pageInfo = data.data;
                 }, "json");
-            },
-            del: function (id) {
-                if (confirm("是否删除?")) {
-                    $.post('/category/delete', {id:id}, function (data) {
-                       if(data.code == "200"){
-                           // 创建 Messager 实例
-                           const message = new $.zui.Messager(data.message, {
-                               type: 'danger',// 定义颜色主题
-                               time:0
-                           }).show();
-
-                           window.location.reload();
-                       }
-                    }, "json");
-                }
-            },
-            addModal: function () {
-                $("#myModal").data("op", "insert");
-                $("#myModalLabel").text("类型管理---添加类型");
-                vm.name = null;
-                $("#myModal").modal('show');
-            },
-            updateModal: function (data) {
-                $("#myModal").data("op", "update");
-                vm.id = data.id;
-                vm.name = data.name;
-                $("#myModalLabel").text("类型管理---修改类型");
-                $("#myModal").modal('show');
             }
-            ,
-            save: function (){
-                const op = $("#myModal").data("op");
-                const forData = new FormData(document.querySelector("#myform"));
-                if (op != "update") {
-                    $.ajax({
-                        url: "/category/insert",
-                        dataType: "json",
-                        type: "post",
-                        cache: false,
-                        processData: false,
-                        contentType: false,
-                        data: forData,
-                        success: function (data) {
-                            if (data.code = "200") {
-                                // 创建 Messager 实例
-                               const message = new $.zui.Messager(data.message, {
-                                    type: 'success',// 定义颜色主题
-                                    time:0
-                                }).show();
-                                $("#myModal").modal('hide');
-                                window.location.reload();
-                            } else {
-                                alert(data.message)
-                            }
-                        }
-                    })
-                } else {
-                    $.ajax({
-                        url: "/category/update",
-                        dataType: "json",
-                        type: "post",
-                        cache: false,
-                        processData: false,
-                        contentType: false,
-                        data: forData,
-                        success: function (data) {
-                            if (data.code = "200") {
-                                // 创建 Messager 实例
-                                const message = new $.zui.Messager(data.message, {
-                                    type: 'success',// 定义颜色主题
-                                    time:0
-                                }).show();
-                                $("#myModal").modal('hide');
-                                window.location.reload();
-                            } else {
-                                alert(data.message)
-                            }
-                        }
-                    })
-                }
 
-            }
         },
         mounted: function () {//初始化数据 第一次会执行的方法
-            $.post('/category/list', {pageNum: 1}, function (data) {
+            $.post('/order/list', {pageNum: 1}, function (data) {
                 vm.pageInfo = data.data;
             }, "json");
         },
         watch: {//监听属性 当属性发生改变执行
             page: function () {
-                $.get('/category/list', {pageNum: vm.page}, function (data) {
+                $.get('/order/list', {pageNum: vm.page}, function (data) {
                     vm.pageInfo = data.data;
                 }, "json");
             }

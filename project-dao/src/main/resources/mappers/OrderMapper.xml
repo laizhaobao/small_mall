@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nf.dao.OrderDao">
+    <resultMap id="orderResultMap" type="com.nf.entity.OrderEntity">
+        <id property="oid" column="oid"></id>
+        <result property="orderNo" column="order_no"></result>
+        <result property="userId" column="user_id"></result>
+        <result property="shippingId" column="shipping_id"></result>
+        <result property="payment" column="payment"></result>
+        <result property="paymentType" column="payment_type"></result>
+        <result property="postage" column="postage"></result>
+        <result property="orderStatus" column="order_status"></result>
+        <result property="paymentTime" column="payment_time"></result>
+        <result property="sendTime" column="send_time"></result>
+        <result property="closeTime" column="close_time"></result>
+        <result property="createTime" column="create_time"></result>
+        <result property="updateTime" column="update_time"></result>
+        <result property="receiverName" column="receiver_name"></result>
+        <result property="receiverProvince" column="receiver_province"></result>
+        <result property="receiverCity" column="receiver_city"></result>
+        <result property="receiverDistrict" column="receiver_districe"></result>
+
+    </resultMap>
+    <select id="getPageHelper" resultMap="orderResultMap">
+         select o.oid,ss.receiver_name, o.order_no, o.user_id, o.shipping_id, o.payment,
+          o.payment_type, o.postage,o.order_status,
+          o.payment_time, o.send_time, o.end_time, o.close_time, o.create_time, o.update_time from small_order o
+         join small_shipping ss on o.shipping_id = ss.shipping_id
+        order by oid
+    </select>
+    <select id="searchName" resultMap="orderResultMap">
+        select o.oid,ss.receiver_name, o.order_no, o.user_id, o.shipping_id, o.payment,
+        o.payment_type, o.postage,o.order_status,
+        o.payment_time, o.send_time, o.end_time, o.close_time, o.create_time, o.update_time from small_order o
+        join small_shipping ss on o.shipping_id = ss.shipping_id
+        <if test="orderNo != null">
+            where o.order_no like '%' #{orderNo} '%'
+        </if>
+         order by oid
+    </select>
+    <select id="getByOrderNo" resultMap="orderResultMap">
+            select o.oid,ss.receiver_name,ss.receiver_province,ss.receiver_city,ss.receiver_address, o.order_no, o.user_id, o.shipping_id, o.payment,
+          o.payment_type, o.postage,o.order_status,
+          o.payment_time, o.send_time, o.end_time, o.close_time, o.create_time, o.update_time from small_order o
+         join small_shipping ss on o.shipping_id = ss.shipping_id where o.order_no = #{orderNo}
+        order by oid
+    </select>
+    <update id="updateStatus">
+        update small_order set order_status = 40 where order_no = #{orderNo}
+    </update>
+</mapper>

@@ -38,4 +38,10 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductEntity> searchName(int pageNum, int pageSize, String name) {
 		return productDao.searchName(pageNum,pageSize,name);
 	}
+
+	@Override
+	public boolean updateState(Integer pStatus,Integer id) {
+		return productDao.updateState(pStatus,id);
+	}
+
 }

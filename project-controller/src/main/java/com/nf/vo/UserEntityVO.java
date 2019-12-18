@@ -9,7 +9,7 @@ import java.util.Date;
  */
 @Data
 public class UserEntityVO {
-	private Integer id;
+	private Integer uid;
 	//主键
 
 	private String username;

@@ -34,15 +34,20 @@ public class MvcConfig implements WebMvcConfigurer {
 
 	//配置信息转换器,这个是在响应回去的时候进行转换,重写这个方法会覆盖默认的
 
-	@Override
+/*	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+
+	}*/
+
+	@Override
+	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setDateFormat(sdf);
 		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter(objectMapper);
-		converters.add(converter);
+//		converters.add(converter);
+		converters.add(0,converter);
 	}
-
 
 	//配置拦截器
 	@Override

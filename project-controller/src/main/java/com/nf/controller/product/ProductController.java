@@ -39,6 +39,11 @@ public class ProductController {
 		return "/be/product/index";
 	}
 
+	@RequestMapping("/image")
+	public String index1() {
+		return "/be/product/image";
+	}
+
 	//删除商品
 	@RequestMapping("/delete")
 	@ResponseBody
@@ -76,10 +81,29 @@ public class ProductController {
 		ResponseVO vo = ResponseVO.newBuilder().code("200").data(pageInfo).message("ok").build();
 		return vo;
 	}
+
 //	修改
 	@RequestMapping("/update")
 	@ResponseBody
-	public ResponseVO updatePro(ProductEntity productEntity, MultipartFile myfile){
+	public ResponseVO updatePro(ProductEntity productEntity, MultipartFile myfile) throws IOException {
+			productEntity.setMainImage(upload(myfile));
+			System.out.println(productEntity);
+			productService.proUpdate(productEntity);
+			return ResponseVO.newBuilder().code("200").message("修改成功!").build();
+
+
+	}
+	//	添加的操作
+	@RequestMapping("/upload")
+	@ResponseBody
+	public ResponseVO upload(ProductEntity productEntity, MultipartFile myfile) throws IOException {
+			productEntity.setMainImage(upload(myfile));
+			productService.proInsert(productEntity);
+			return ResponseVO.newBuilder().code("200").message("添加成功!").build();
+
+	}
+	//上传图片
+	private String upload(MultipartFile myfile) throws IOException {
 		//获取到图片名称
 		String fileName = myfile.getOriginalFilename();
 //		获取图片后缀
@@ -93,40 +117,11 @@ public class ProductController {
 		try {
 //			文件上传到指定文件
 			myfile.transferTo(file);
-			productEntity.setMainImage(fileName);
-			System.out.println(productEntity);
-			productService.proUpdate(productEntity);
-			return ResponseVO.newBuilder().code("200").message("修改成功!").build();
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new RuntimeException();
 		}
-
-	}
-	//	添加的操作
-	@RequestMapping("/upload")
-	@ResponseBody
-	public ResponseVO upload(ProductEntity productEntity, MultipartFile myfile) {
-//获取到图片名称
-		String fileName = myfile.getOriginalFilename();
-//		获取图片后缀
-		String exl = fileName.substring(fileName.lastIndexOf("."));
-//		UUID转换名称使其唯一
-		fileName = UUID.randomUUID().toString() + exl;
-//		获取绝对路径
-		String path = FILE_DIRECTORY + File.separator + fileName;
-//		传入文件对象中
-		File file = new File(path);
-		try {
-//			文件上传到指定文件
-			myfile.transferTo(file);
-			productEntity.setMainImage(fileName);
-			productService.proInsert(productEntity);
-			return ResponseVO.newBuilder().code("200").message("添加成功!").build();
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new RuntimeException();
-		}
+		return fileName;
 	}
 
 	//显示图片
@@ -151,11 +146,24 @@ public class ProductController {
 		//需要进行URL编码处理,否则另存为对话框不能显示中文
 		respHeaders.setContentDispositionFormData("attachment",
 				URLEncoder.encode(filename,"UTF-8"));
-
-
 		InputStreamResource isr =
 				new InputStreamResource(new FileInputStream(file));
 		return new ResponseEntity<>(isr, respHeaders, HttpStatus.OK);
 	}
 
+
+	//	修改商品状态(上架与下架)
+
+	@RequestMapping("/updateState")
+	@ResponseBody
+	public ResponseVO updateState(@RequestParam(value = "productState", required = false) String productState,
+								  @RequestParam(value = "proId", required = false) String proId) {
+		Integer id = Integer.parseInt(proId);
+		Integer pStatus = Integer.parseInt(productState);
+		System.out.println("productState = " +pStatus+"---"+id);
+			if(productService.updateState(pStatus,id)){
+				return ResponseVO.newBuilder().code("200").message("ok!").build();
+			}
+		return ResponseVO.newBuilder().code("500").message("failed!").build();
+	}
 }

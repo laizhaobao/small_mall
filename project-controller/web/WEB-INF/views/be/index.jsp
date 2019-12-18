@@ -14,7 +14,7 @@
     <script type="text/javascript" src="/static/zui-ui/lib/jquery/jquery.js"></script>
     <link rel="stylesheet" href="/static/zui-ui/css/zui.min.css"/>
     <script type="text/javascript" src="/static/zui-ui/js/zui.min.js"></script>
-    <script type="text/javascript" src="/static/js/vue.js"></script>
+    <script type="text/javascript" src="/static/js/vue.min.js"></script>
 </head>
 <body>
 <div class="container" id="app">
@@ -71,7 +71,7 @@
                             <a href="#"><i class="icon icon-shopping-cart"></i>订单</a>
                             <ul>
                                 <li>
-                                    <a href="#">订单管理</a>
+                                    <a href="/order/index">订单管理</a>
                                 </li>
 
                             </ul>

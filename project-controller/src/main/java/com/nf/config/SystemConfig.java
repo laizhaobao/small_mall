@@ -6,6 +6,12 @@ import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletRegistration;
 
 public class SystemConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
+	//相当于在xml中配置<multipartConfig>
+
+	@Override
+	protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+		registration.setMultipartConfig(new MultipartConfigElement(""));
+	}
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {

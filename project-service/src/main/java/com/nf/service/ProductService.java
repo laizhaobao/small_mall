@@ -14,4 +14,7 @@ public interface ProductService {
 	boolean proDelete(Integer id);
 	boolean proUpdate(ProductEntity proEntity);
 	List<ProductEntity> searchName(int pageNum,int pageSize,String name);
+
+	boolean updateState(Integer pStatus,Integer id);
+
 }

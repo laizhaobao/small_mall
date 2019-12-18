@@ -8,31 +8,31 @@ import lombok.Data;
  */
 @Data
 public class ShippingEntity {
-	private Integer id;
-	private Integer user_id;
+	private Integer shippingId;
+	private Integer userId;
 	//用户id
 
-	private String receiver_name;
+	private String receiverName;
 	//收货人姓名
 
-	private String receiver_phone;
+	private String receiverPhone;
 	//固定电话
 
-	private String receiver_mobile;
+	private String receiverMobile;
 	//移动电话
 
-	private String receiver_province;
+	private String receiverProvince;
 	//省份
 
-	private String receiver_city;
+	private String receiverCity;
 	//城市
-	private String receiver_district;
+	private String receiverDistrict;
 	/*区/县*/
 
-	private String receiver_address;
+	private String receiverAddress;
 	//详细地址
 
-	private String receiver_zip;
+	private String receiverZip;
 	//邮编
 
 
