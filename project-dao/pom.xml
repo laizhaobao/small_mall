@@ -52,16 +52,6 @@
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>
         </dependency>
-        <!-- 测试依赖-->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-        <!--    spring 测试依赖-->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-        </dependency>
 
     </dependencies>
 </project>

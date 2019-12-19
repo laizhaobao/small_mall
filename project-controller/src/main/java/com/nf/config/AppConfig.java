@@ -97,20 +97,6 @@ public class AppConfig {
 		return transactionManager;
 	}
 
-	/**
-	 * 文件上传支持
-	 * id必须为multipartResolver，否则无法解析form-data类型的数据
-	 */
-	@Bean("multipartResolver")
-	public CommonsMultipartResolver commonsMultipartResolver() throws IOException {
-		CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
-		commonsMultipartResolver.setDefaultEncoding("utf-8");
-		commonsMultipartResolver.setMaxUploadSize(5242880);
-		commonsMultipartResolver.setMaxInMemorySize(51200);
-		commonsMultipartResolver.setUploadTempDir(new FileSystemResource("/uploadTempDir"));
-		commonsMultipartResolver.setResolveLazily(true);
-		return commonsMultipartResolver;
-	}
 
 
 }
