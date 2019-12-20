@@ -30,8 +30,6 @@ public class UserEntity {
 	private String answer;
 	//	密保答案
 
-	private Integer role;
-	//	角色权限 0 --管理员 1--普通用户
 //	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date createTime;
 	//	创建时间

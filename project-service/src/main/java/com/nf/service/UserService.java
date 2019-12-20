@@ -1,6 +1,8 @@
 package com.nf.service;
 
+import com.nf.entity.RoleEntity;
 import com.nf.entity.UserEntity;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,4 +17,18 @@ public interface UserService {
 	boolean userDelete(Integer id);
 	boolean userUpdate(UserEntity userEntity);
 	List<UserEntity> searchName(int pageNum,int pageSize,String name);
+
+	//根据用户id获取角色信息
+
+	RoleEntity getRoles(String userId);
+
+	//	删除该用户的某个角色解除权限
+
+	void deleteRolesByUserId(String userId);
+
+//	添加该用户某个权限
+
+	void insertUserRole(String userId,String roleId);
+
+	RoleEntity getUserRole(String id);
 }

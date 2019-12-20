@@ -1,116 +1,94 @@
 <%--
   Created by IntelliJ IDEA.
-  User: admin
-  Date: 2019/12/3
-  Time: 12:09
+  User: fangchengfangcheng
+  Date: 2019-12-02
+  Time: 14:59
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>后台管理</title>
-    <script type="text/javascript" src="/static/zui-ui/lib/jquery/jquery.js"></script>
-    <link rel="stylesheet" href="/static/zui-ui/css/zui.min.css"/>
-    <script type="text/javascript" src="/static/zui-ui/js/zui.min.js"></script>
-    <script type="text/javascript" src="/static/js/vue.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SMAll MAll ADMIN</title>
+
+    <!-- zui css -->
+    <link rel="stylesheet" href="/static/zui-ui/dist/css/zui.min.css">
+    <link rel="stylesheet" href="/static/zui-ui/dist/theme/blue.css">
+    <!-- app css -->
+    <link rel="stylesheet" href="/static/zui-ui/css/app.css">
 </head>
 <body>
-<div class="container" id="app">
-    <div class="row clearfix">
-        <div class="col-md-12 column" style="background-color: #F1F1F1;">
-            <div class="col-md-4 column">
-                <h1>
-                    SAMll ADMIN
-                </h1>
+
+<div class="wrapper" id="app">
+    <header class="main-header">
+        <nav class="navbar navbar-fixed-top bg-primary">
+            <div class="navbar-header">
+                <a class="navbar-toggle" href="javascript:;" data-toggle="collapse" data-target=".navbar-collapse"><i
+                        class="icon icon-th-large"></i></a>
+                <a class="sidebar-toggle" href="javascript:;" data-toggle="push-menu"><i class="icon icon-bars"></i></a>
+                <a class="navbar-brand" href="#">
+                    <span class="logo">SMAll MAll</span>
+                    <span class="logo-mini">MAll</span>
+                </a>
             </div>
-            <div class="col-md-8 column">
-                <h3 class="pull-right username">
-                    当前用户：${username} <a href="/be/exit">退出</a>
-                </h3>
+            <div class="collapse navbar-collapse">
+                <div class="container-fluid">
+                    <ul class="nav navbar-nav">
+                        <li><a href="javascript:;" data-toggle="push-menu"><i class="icon icon-bars"></i></a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
 
-            </div>
-        </div>
-        <div class="row clearfix" style="background-color: #FFFFFF;">
-            <div class="col-md-3 column">
-                <nav class="menu" data-ride="menu" style="width: 200px">
-                    <ul id="treeMenu" class="tree tree-menu" data-ride="tree">
-                        <li>
-                            <a href="/be/index"><i class="icon icon-th"></i>首页</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="icon icon-archive"></i>用户</a>
-                            <ul>
-                                <li>
-                                    <a href="/user/index">用户管理</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="icon icon-archive"></i>商品</a>
-                            <ul>
-                                <li>
-                                    <a href="/product/index">商品管理</a>
-                                </li>
-                                <li>
-                                    <a href="/category/index">品类管理</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="icon icon-envelope-alt"></i>留言</a>
-                            <ul>
-                                <li>
-                                    <a href="/message/index">留言管理</a>
-                                </li>
-
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="icon icon-shopping-cart"></i>订单</a>
-                            <ul>
-                                <li>
-                                    <a href="/order/index">订单管理</a>
-                                </li>
-
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="icon icon-bullhorn"></i>公告</a>
-                            <ul>
-                                <li>
-                                    <a href="#">公告管理</a>
-                                </li>
-
+                        <li class="dropdown">
+                            <input type="hidden" id="userId" value="${user.uid}"/>
+                            <a href="javascript:;" data-toggle="dropdown"><i class="icon icon-user"></i>${user.username}<span
+                                    class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li class="divider"></li>
+                                <li><a href="/be/exit">注销</a></li>
                             </ul>
                         </li>
                     </ul>
-                </nav>
+                </div>
             </div>
-            <div class="col-md-9 column">
-                <%--				填写数据的地方--%>
-                <h1>HOME</h1>
-                <hr>
-                <h3>welcome</h3>
-            </div>
+        </nav>
+    </header>
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <ul id="treeMenu" class="sidebar-menu" data-widget="tree">
+                <li class="header">主要菜单</li>
+                <li class="treeview" id="menuTemplate">
+                    <a href="javascript:;">
+                        <span class="parent">模版</span>
+                        <span class="pull-right-container">
+                                <i class="icon icon-angle-left"></i>
+                            </span>
+                    </a>
+                    <ul class="treeview-menu child">
+
+                    </ul>
+                </li>
+            </ul>
+        </section>
+    </aside>
+    <div class="content-wrapper">
+        <div class="content-header">
+            <ul class="breadcrumb">
+                <li><a href="#"><i class="icon icon-home"></i></a></li>
+                <li class="active">首页</li>
+            </ul>
         </div>
-    </div>
-    <div class="row clearfix">
-        <div class="col-md-12 column">
-            <div class="center-block" style="width:400px;max-width:100%;background-color:#ccc;">
-                <h3>无版权</h3>
+        <div class="content-body">
+            <div class="container-fluid">
+                <h1>欢迎来到主界面</h1>
             </div>
         </div>
     </div>
 </div>
-
+<script src="/static/js/jquery-3.3.1.min.js"></script>
+<script src="/static/js/menu.js"></script>
+<script src="/static/zui-ui/dist/js/zui.min.js" charset="utf-8"></script>
+<script src="/static/zui-ui/js/app.js"></script>
 </body>
-<script type="text/javascript">
-    // 手动通过点击模拟高亮菜单项
-    $('#treeMenu').on('click', 'a', function () {
-        $('#treeMenu li.active').removeClass('active');
-        $(this).closest('li').addClass('active');
-    });
-</script>
 </html>

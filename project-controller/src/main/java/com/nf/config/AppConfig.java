@@ -34,7 +34,7 @@ import java.util.Properties;
  * EnableWebMvc(WebMvcConfigurer): 开启MVC配置,实现这个类,可以进行mvc的一些配置
  */
 @Configuration
-@ComponentScan({"com.nf.service.impl", "com.nf.controller", "com.nf.advice", "com.nf.interceptory"})
+@ComponentScan({"com.nf.service.impl", "com.nf.controller", "com.nf.advice"})//, "com.nf.interceptory"拦截器先不急
 @MapperScan("com.nf.dao")
 @PropertySource("classpath:db.properties")
 @EnableTransactionManagement

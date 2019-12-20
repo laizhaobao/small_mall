@@ -1,6 +1,9 @@
 package com.nf.controller;
 
 
+import com.nf.entity.UserEntity;
+import com.nf.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -16,6 +19,9 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/be")
 public class IndexController {
 
+	@Autowired
+	private UserService userService;
+
 /*主界面*/
 	@RequestMapping("/index")
 	public String index() {
@@ -30,10 +36,15 @@ public class IndexController {
 	}
 	@RequestMapping("/login")
 	public String login(String username, String pwd, HttpServletRequest request){
-		if("admin".equalsIgnoreCase(username)&&"123456".equalsIgnoreCase(pwd)){
-			HttpSession session = request.getSession();
-			session.setAttribute("username",username);
-			System.out.println("登陆成功...");
+		UserEntity userEntity = new UserEntity();
+		userEntity.setUsername(username);
+		UserEntity u2= userService.getByName(userEntity);
+		if(u2!=null){
+			if(u2.getPwd().equalsIgnoreCase(pwd)){
+				HttpSession session = request.getSession();
+				session.setAttribute("user",u2);
+				System.out.println("登陆成功...");
+			}
 		}
 		return "/be/index";
 	}

@@ -10,30 +10,27 @@
         <result property="updateTime" column="update_time"></result>
     </resultMap>
     <select id="getPageHelper" resultMap="userResultMap">
-        select uid, username,pwd,email,phone,question,answer,role,create_time,update_time
-        from small_user
+        select * from small_user
         order by uid
     </select>
     <!--    登陆查询-->
     <select id="getByName" resultMap="userResultMap">
-        select uid, username,pwd,email,phone,question,answer,role,create_time,update_time
-        from small_user where username = #{username}
+        select * from small_user where username = #{username}
     </select>
 
     <!--    条件查询-->
     <select id="searchName" resultMap="userResultMap">
-        select uid, username,pwd,email,phone,question,answer,role,create_time,update_time
-        from small_user
+        select * from small_user
         <if test="name != null">
             where username like #{name} '%'
         </if>
-        order by id
+        order by uid
     </select>
 
 
     <insert id="userInsert">
-        INSERT INTO small_user(username,pwd,email,phone,question,answer,role,create_time,update_time)
-        VALUES (#{username},#{pwd},#{email},#{phone}, #{question}, #{answer},1,now(), now());
+        INSERT INTO small_user(username, pwd, email, phone, question, answer, create_time, update_time)
+        VALUES (#{username},#{pwd},#{email},#{phone}, #{question}, #{answer},now(), now());
     </insert>
     <delete id="userDelete">
         delete from small_user where uid = #{id}
@@ -42,4 +39,14 @@
         update small_user set username=#{username},pwd=#{pwd},email=#{email},phone=#{phone},question=#{question},
         answer=#{answer},update_time=now() where uid = #{uid}
     </update>
+
+    <select id="getRoles" resultType="com.nf.entity.RoleEntity">
+        select r.* from role r,user_role ur where ur.user_id = #{userId} and r.id = ur.role_id
+    </select>
+    <delete id="deleteRolesByUserId">
+        delete from user_role where user_id = #{userId}
+    </delete>
+    <insert id="insertUserRole">
+        insert into user_role (user_id,role_id) values(#{userId},#{roleId})
+    </insert>
 </mapper>

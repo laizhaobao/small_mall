@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="robots" content="all,follow">
     <link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
-    <link rel="stylesheet" href="/static/css/style.default.css" id="theme-stylesheet">
+
 </head>
 <body>
 <div class="page login-page">
@@ -60,6 +60,6 @@
 <!-- JavaScript files-->
 <script src="/static/zui-ui/lib/jquery/jquery.js"></script>
 <script src="https://www.jq22.com/jquery/bootstrap-3.3.4.js"></script>
-<script src="/static/vendor/jquery-validation/jquery.validate.min.js"></script><!--表单验证-->
+
 </body>
 </html>
