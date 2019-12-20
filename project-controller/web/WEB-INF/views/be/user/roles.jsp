@@ -16,6 +16,10 @@
     <!-- zui css -->
     <link rel="stylesheet" href="/static/zui-ui/dist/css/zui.min.css">
     <link rel="stylesheet" href="/static/zui-ui/dist/theme/blue.css">
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="/static/css/bootstrapStyle/bootstrapStyle.css" type="text/css">
+    <script type="text/javascript" src="/static/js/ztree/jquery.ztree.core.js"></script>
+    <script type="text/javascript" src="/static/js/ztree/jquery.ztree.excheck.js"></script>
     <script type="text/javascript" src="/static/js/vue.min.js"></script>
     <!-- app css -->
     <link rel="stylesheet" href="/static/zui-ui/css/app.css">
@@ -100,7 +104,7 @@
                                 <td>{{role.name}}</td>
                                 <td>{{role.description}}</td>
                                 <td>
-                                    <input type="button" class="btn btn-primary" @click="updateModal(cate)" value="授权">
+                                    <input type="button" class="btn btn-primary" @click="updateModal(role.id)" value="授权">
                                 </td>
                             </tr>
                             </tbody>
@@ -113,14 +117,33 @@
                     </div>
                 </div>
                 <%--                内容区域--%>
-
-                <%--模态框--%>
+<%--                模态框--%>
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">权限授予
+                                <input type="hidden" id="roleId" value="">
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <ul id="tree" class="ztree"></ul>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-primary" @click="save()">保存</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal -->
+                </div>
+            <%--模态框--%>
             </div>
         </div>
     </div>
 </div>
-<script src="/static/js/jquery-3.3.1.min.js"></script>
 <script src="/static/js/menu.js"></script>
+<script src="/static/js/privilegeTree.js"></script>
 <script src="/static/zui-ui/dist/js/zui.min.js" charset="utf-8"></script>
 <script src="/static/zui-ui/js/app.js"></script>
 <script type="text/javascript">
@@ -140,14 +163,32 @@
         * }
         * */
             updateModal: function (data) {
-                $("#myModal").data("op", "update");
-
+                $("#userId").val(data);
+                //点击授权按钮将当前角色id当参数传递controller
+                $.getJSON("/role/privilege/list", {"roleId": data}, function (result) {
+                    $.fn.zTree.init($("#tree"), setting, result);
+                })
                 $("#myModal").modal('show');
             }
             ,
             save: function (){
-                const op = $("#myModal").data("op");
-                const forData = new FormData(document.querySelector("#myform"));
+                var ids= getIdsFromCheckNodes();
+                console.log(ids);
+                $.ajax({
+                    url: "/admin/role-privilege/inser",
+                    type: "post",
+                    traditional: true,
+                    data: {
+                        "privilege_id":getIdsFromCheckNodes(),
+                        "role_id": $("#userId").val()
+                    },
+                    success: function (result) {
+                        if (result == true) {
+                            alert("授权成功");
+                        }
+
+                    }
+                })
             }
 
         },
@@ -164,6 +205,30 @@
             }
         }
     });
+
+    var setting = {
+        check: {
+            //使用复选框
+            enable: true
+        },
+        data: {
+            //使用外部数据
+            simpleData: {
+                enable: true
+            }
+        }
+    };
+
+    function getIdsFromCheckNodes(event, treeId, treeNode) {       //第二步
+        var treeObj = $.fn.zTree.getZTreeObj("tree"),
+            nodes = treeObj.getCheckedNodes(true),
+            id = [];
+        for (var i = 0; i < nodes.length; i++) {
+            id[i] = nodes[i].id; //第三步
+        }
+        return id;
+    }
+
 </script>
 
 </body>

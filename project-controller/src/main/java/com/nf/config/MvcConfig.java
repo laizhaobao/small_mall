@@ -45,7 +45,6 @@ public class MvcConfig implements WebMvcConfigurer {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setDateFormat(sdf);
 		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter(objectMapper);
-//		converters.add(converter);
 		converters.add(0,converter);
 	}
 
