@@ -86,7 +86,10 @@ public class ProductController {
 	@RequestMapping("/update")
 	@ResponseBody
 	public ResponseVO updatePro(ProductEntity productEntity, MultipartFile myfile) throws IOException {
+		System.out.println("myfile = " + myfile);
+		if(myfile.getSize()>0){
 			productEntity.setMainImage(upload(myfile));
+		}
 			System.out.println(productEntity);
 			productService.proUpdate(productEntity);
 			return ResponseVO.newBuilder().code("200").message("修改成功!").build();

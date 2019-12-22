@@ -4,10 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nf.interceptory.LoginInterceptor;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.format.datetime.DateFormatter;
+import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.*;
 
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +20,7 @@ import java.util.List;
  * Mvc配置
  */
 public class MvcConfig implements WebMvcConfigurer {
+
 
 	//	配置视图资源解析器
 	@Override
@@ -45,7 +49,18 @@ public class MvcConfig implements WebMvcConfigurer {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setDateFormat(sdf);
 		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter(objectMapper);
+		StringHttpMessageConverter encoding= new StringHttpMessageConverter(Charset.forName("UTF-8"));
+		MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
+		List<MediaType> mediaTypes = new ArrayList<>();
+		mediaTypes.add(MediaType.APPLICATION_JSON);
+		jsonConverter.setSupportedMediaTypes(mediaTypes);
+
+//		添加时间格式转换器
 		converters.add(0,converter);
+//		添加字符编码转换器
+		converters.add(1,encoding);
+//		添加json格式转换器
+		converters.add(2,jsonConverter);
 	}
 
 	//配置拦截器

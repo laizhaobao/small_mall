@@ -18,8 +18,11 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.*;
+
+import javax.servlet.Filter;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.Properties;
@@ -96,7 +99,5 @@ public class AppConfig {
 		transactionManager.setDataSource(dataSource());
 		return transactionManager;
 	}
-
-
 
 }

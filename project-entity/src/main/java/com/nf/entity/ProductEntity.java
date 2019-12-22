@@ -47,4 +47,5 @@ public class ProductEntity {
 
 	private Date updateTime;
 	//'更新时间',
+
 }
