@@ -3,6 +3,10 @@ package com.nf.config;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.github.pagehelper.PageInterceptor;
 
+import com.google.code.kaptcha.Constants;
+import com.google.code.kaptcha.Producer;
+import com.google.code.kaptcha.impl.DefaultKaptcha;
+import com.google.code.kaptcha.util.Config;
 import org.apache.ibatis.logging.stdout.StdOutImpl;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -12,19 +16,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.*;
 
-import javax.servlet.Filter;
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -100,4 +99,31 @@ public class AppConfig {
 		return transactionManager;
 	}
 
+	/**
+	 * 生成图形验证码的基本参数
+	 * @return
+	 */
+	@Bean
+	public Producer captchaProducer() {
+		DefaultKaptcha captchaProducer = new DefaultKaptcha();
+		Properties properties = new Properties();
+//		设置图片长宽
+		properties.setProperty(Constants.KAPTCHA_IMAGE_WIDTH, "100");
+		properties.setProperty(Constants.KAPTCHA_IMAGE_HEIGHT, "30");
+//		设置图片字体、个数、间隔、颜色
+		properties.setProperty(Constants.KAPTCHA_TEXTPRODUCER_FONT_SIZE, "22");
+		properties.setProperty(Constants.KAPTCHA_TEXTPRODUCER_CHAR_LENGTH, "4");
+		properties.setProperty(Constants.KAPTCHA_TEXTPRODUCER_CHAR_SPACE, "6");
+		properties.setProperty(Constants.KAPTCHA_TEXTPRODUCER_FONT_COLOR, "black");
+
+		properties.setProperty(Constants.KAPTCHA_BORDER_COLOR, "LIGHT_GRAY");
+		properties.setProperty(Constants.KAPTCHA_BACKGROUND_CLR_FROM, "WHITE");
+		properties.setProperty(Constants.KAPTCHA_NOISE_IMPL, "com.google.code.kaptcha.impl.NoNoise");
+		properties.setProperty(Constants.KAPTCHA_OBSCURIFICATOR_IMPL, "com.google.code.kaptcha.impl.ShadowGimpy");
+		properties.setProperty(Constants.KAPTCHA_TEXTPRODUCER_CHAR_STRING, "0123456789");
+		properties.setProperty(Constants.KAPTCHA_SESSION_CONFIG_KEY, "checkCode");
+		Config config = new Config(properties);
+		captchaProducer.setConfig(config);
+		return captchaProducer;
+	}
 }

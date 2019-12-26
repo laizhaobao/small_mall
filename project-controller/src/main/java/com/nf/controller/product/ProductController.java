@@ -39,10 +39,6 @@ public class ProductController {
 		return "/be/product/index";
 	}
 
-	@RequestMapping("/image")
-	public String index1() {
-		return "/be/product/image";
-	}
 
 	//删除商品
 	@RequestMapping("/delete")
@@ -140,7 +136,6 @@ public class ProductController {
 			/*识别不了时,统统用这个,一般用来表示下载二进制数据*/
 			mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
 		}
-		System.out.println("-----debug: mediaType = " + mediaType);
 		HttpHeaders respHeaders = new HttpHeaders();
 		respHeaders.setContentType(MediaType.parseMediaType(mediaType));
 

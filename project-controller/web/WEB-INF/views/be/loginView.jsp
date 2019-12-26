@@ -1,65 +1,56 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: admin
-  Date: 2019/12/3
-  Time: 8:52
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>后台管理</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="robots" content="all,follow">
-    <link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
+    <!-- zui css -->
+    <link rel="stylesheet" href="/static/zui-ui/dist/css/zui.min.css">
+    <link rel="stylesheet" href="/static/zui-ui/dist/theme/blue.css">
+    <!-- app css -->
+    <link rel="stylesheet" href="/static/zui-ui/css/app.css">
+    <!-- jquery js -->
+    <script src="/static/zui-ui/dist/lib/jquery/jquery.js"></script>
 
 </head>
-<body>
-<div class="page login-page">
-    <div class="container d-flex align-items-center">
-        <div class="form-holder has-shadow">
-            <div class="row">
-                <!-- Logo & Information Panel-->
-                <div class="col-lg-6">
-                    <div class="info d-flex align-items-center">
-                        <div class="content">
-                            <div class="logo">
-                                <h1>欢迎登录</h1>
-                            </div>
-                            <p>后台管理系统</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Form Panel    -->
-                <div class="col-lg-6 bg-white">
-                    <div class="form d-flex align-items-center">
-                        <div class="content">
-                            <form method="post" action="/be/login" class="form-validate" id="loginFrom">
-                                <div class="form-group">
-                                    <input id="login-username" type="text" name="username" required data-msg="请输入用户名" placeholder="用户名" value="admin" class="input-material">
-                                </div>
-                                <div class="form-group">
-                                    <input id="login-password" type="password" name="pwd" required data-msg="请输入密码" placeholder="密码" class="input-material">
-                                </div>
-                                <button id="login" type="submit" class="btn btn-block btn-primary">登录</button>
-                                <div style="margin-top: -40px;">
-                                </div>
-                            </form>
-                            <br />
-
-                        </div>
-                    </div>
-                </div>
+<body class="bg-primary">
+<div class="page page-login text-center">
+    <div class="panel">
+        <div class="panel-body">
+            <div class="logo">
+                <a href="#">后台登录</a>
             </div>
+            <form action="/be/login" method="post">
+                <div class="form-group">
+                    <input type="text" name="username" class="form-control" placeholder="帐号">
+                </div>
+                <div class="form-group">
+                    <input type="password" name="pwd" class="form-control" placeholder="密码">
+                </div>
+                <div class="form-group">
+                    <div class="input-control has-icon-left has-icon-right">
+                        <input type="text" id="verificationCode" name="verificationCode" style="width: 100px" placeholder="验证码">
+                       <img style="top: 20px" src="/be/defaultKaptcha">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-lg btn-primary btn-block">登录</button>
+            </form>
         </div>
     </div>
+    <footer class="page-copyright page-copyright-inverse">
+        <p>WEBSITE BY Bob</p>
+        <p>© 2019. All RIGHT RESERVED.</p>
+    </footer>
 </div>
-<!-- JavaScript files-->
-<script src="/static/zui-ui/lib/jquery/jquery.js"></script>
-<script src="https://www.jq22.com/jquery/bootstrap-3.3.4.js"></script>
 
+
+<!-- zui js -->
+<script src="/static/zui-ui/dist/js/zui.js"></script>
+<%--<!-- app js -->--%>
+<script src="/static/zui-ui/js/app.js"></script>
+<script type="text/javascript">
+
+</script>
 </body>
 </html>

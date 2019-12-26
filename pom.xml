@@ -36,12 +36,10 @@
         <mybatis.spring.version>2.0.2</mybatis.spring.version>
         <aspect.version>1.9.4</aspect.version>
         <pagehelper.version>5.1.10</pagehelper.version>
-        <vue.version>2.6.10</vue.version>
         <jackson.version>2.9.10</jackson.version>
-        <jquery.version>3.2.1</jquery.version>
         <hibernate.validator.version>6.1.0.Final</hibernate.validator.version>
         <lombok.version>1.18.8</lombok.version>
-
+        <kaptcha.version>2.3.2</kaptcha.version>
     </properties>
     <!--依赖管理-->
     <dependencyManagement>
@@ -134,18 +132,6 @@
                 <artifactId>aspectjweaver</artifactId>
                 <version>${aspect.version}</version>
             </dependency>
-            <!--    vue依赖-->
-            <dependency>
-                <groupId>org.webjars.npm</groupId>
-                <artifactId>vue</artifactId>
-                <version>${vue.version}</version>
-            </dependency>
-            <!--jquery依赖 -->
-            <dependency>
-                <groupId>org.webjars.bower</groupId>
-                <artifactId>jquery</artifactId>
-                <version>${jquery.version}</version>
-            </dependency>
             <!--            json依赖这个管理
              -->
             <dependency>
@@ -167,6 +153,12 @@
                 <scope>provided</scope>
             </dependency>
 
+<!-- 验证码插件           -->
+            <dependency>
+                <groupId>com.github.penggle</groupId>
+                <artifactId>kaptcha</artifactId>
+                <version>${kaptcha.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

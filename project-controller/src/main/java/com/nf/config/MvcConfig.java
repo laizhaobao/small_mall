@@ -29,7 +29,7 @@ public class MvcConfig implements WebMvcConfigurer {
 
 	}
 
-	//	配置时间格式转换器 这个是在数据绑定的时候将字符串转换为日期格式
+	//	配置时间格式转换器 这个是在数据绑定的时候将字符串转换为日期格式(请求时)
 
 	@Override
 	public void addFormatters(FormatterRegistry registry) {
@@ -72,6 +72,10 @@ public class MvcConfig implements WebMvcConfigurer {
 		excludeUrl.add("/be/loginView");
 		excludeUrl.add("/be/login");
 		excludeUrl.add("/be/exit");
+		excludeUrl.add("//be/defaultKaptcha");
+//		放行静态资源
+		excludeUrl.add("/static/**");
+
 		registration.excludePathPatterns(excludeUrl);
 	}
 
